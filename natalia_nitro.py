@@ -23,33 +23,49 @@ def calculate_emissions_and_equivalents(n_excreted, ammonia_percentage, n2o_perc
 
 # Define the equations and their inputs
 equations = {
-    "Equation 16 - DMI": {
+    "Equation 16 Dairy - DMI": {
         "formula": lambda DMI: 54.5 + (14.4 * DMI),
         "inputs": ["DMI"]
     },
-    "Equation 17 - N_intake": {
+    "Equation 17 Dairy - N_intake": {
         "formula": lambda N_intake: 49.0 + (0.56 * N_intake),
         "inputs": ["N_intake"]
     },
-    "Equation 18 - Diet": {
+    "Equation 18 Dairy - Diet": {
         "formula": lambda CP, NDF: 40.1 + (2.2 * CP) - (0.13 * NDF),
         "inputs": ["CP","NDF"]
     },
-    "Equation 19 - Milk": {
+    "Equation 19 Dairy - Milk": {
         "formula": lambda MY, MUN, MProt: -41.0 + (5.1 * MY) + (6.0 * MUN) + (54.5 * MProt),
         "inputs": ["MY", "MUN", "MProt"]
     },
-    "Equation 20 - MUN": {
+    "Equation 20 Dairy - MUN": {
         "formula": lambda MUN: 290.7 + (6.1 * MUN),
         "inputs": ["MUN"]
     },
-    "Equation 21 - MUN + N_intake": {
+    "Equation 21 Dairy - MUN + N_intake": {
         "formula": lambda N_intake, MUN: 30.0 + (0.55 * N_intake) + (2.5 * MUN),
         "inputs": ["N_intake", "MUN"]
     },
-    "Equation 22 - Full Model": {
+    "Equation 22 Dairy - Full Model": {
         "formula": lambda N_intake, MUN, MProt: -24.5 + (0.54 * N_intake) + (2.5 * MUN) + (14.8 * MProt),
         "inputs": ["N_intake", "MUN", "MProt"]
+    },
+    "Equation 1 Beef - DMI": {
+        "formula": lambda DMI_beef: 5.03 + (6.49 * DMI_beef),
+        "inputs": ["DMI_beef"]
+    },
+    "Equation 2 Beef - N_intake": {
+        "formula": lambda N_intake_beef: 13.5 + (0.24 * N_intake_beef),
+        "inputs": ["N_intake_beef"]
+    },
+    "Equation 3 Beef - Diet": {
+        "formula": lambda CP_beef, NDF_beef: 24.7 + (0.15 * CP_beef) + (0.06 * NDF_beef),
+        "inputs": ["CP_beef", "NDF_beef"]
+    },
+    "Equation 6 Beef - Full Model": {
+        "formula": lambda N_intake_beef, MUN, MProt: 18.8 + (0.15 * N_intake_beef) + (8.89 * NDFI_beef),
+        "inputs": ["N_intake_beef", "NDFI_beef"]
     }
     # Add other equations similarly
 }
@@ -62,7 +78,12 @@ input_stats = {
     "N_intake": {"mean": 575.8, "stdev": 116.9, "min": 222.4, "max": 927.2},
     "MUN": {"mean": 10.5, "stdev": 4.12, "min": 1.5, "max": 24.0},
     "MY": {"mean": 33.3, "stdev": 8.23, "min": 7.3, "max": 56.9},
-    "MProt": {"mean": 3.21, "stdev": 0.298, "min": 2.45, "max": 4.06}
+    "MProt": {"mean": 3.21, "stdev": 0.298, "min": 2.45, "max": 4.06},
+    "DMI_beef": {"mean": 9.3, "stdev": 2.03, "min": 3.3, "max": 13.6},
+    "CP_beef": {"mean": 14.8, "stdev": 3.21, "min": 11.3, "max": 23.0},
+    "NDF_beef": {"mean": 32.8, "stdev": 9.08, "min": 11.6, "max": 52.1},
+    "N_intake_beef": {"mean": 218, "stdev": 63.2, "min": 97.5, "max": 386},
+    "NDFI_beef": {"mean": 3.0, "stdev": 0.99, "min": 0.7, "max": 5.7}
 }
 
 # Helper function to simulate input values
@@ -86,7 +107,7 @@ def toggle_corn_processing():
 st.title("Nitrogen Excretion and Emissions Estimation")
 
 # Dropdown for selecting equation
-selected_equation = st.selectbox("Select Equation from Reed et al., 2015 - https://doi.org/10.3168/jds.2014-8397", list(equations.keys()))
+selected_equation = st.selectbox("Select: Dairy Equations from Reed et al., 2015 - https://doi.org/10.3168/jds.2014-8397 or Beef Equations from Bougouin et al., 2022 https://doi.org/10.1093/jas/skac150", list(equations.keys()))
 
 # Display inputs based on selected equation
 inputs = {}
