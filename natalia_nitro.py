@@ -64,7 +64,7 @@ equations = {
         "inputs": ["CP_beef", "NDF_beef"]
     },
     "Equation 6 Beef - Full Model": {
-        "formula": lambda N_intake_beef, MUN, MProt: 18.8 + (0.15 * N_intake_beef) + (8.89 * NDFI_beef),
+        "formula": lambda N_intake_beef, NDFI_beef: 18.8 + (0.15 * N_intake_beef) + (8.89 * NDFI_beef),
         "inputs": ["N_intake_beef", "NDFI_beef"]
     }
     # Add other equations similarly
