@@ -152,7 +152,7 @@ total_n_excreted_kg, ammonia_emissions, n2o_emissions_metric_tons, co2_equivalen
 )
 
 # Corn processing toggle
-corn_processing_btn = st.button("Genetic Improvement", on_click=toggle_corn_processing)
+corn_processing_btn = st.button("Corn Genetic Improvement", on_click=toggle_corn_processing)
 
 # Apply discount if corn processing is enabled
 if st.session_state.corn_processing:
